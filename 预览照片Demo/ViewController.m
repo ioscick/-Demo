@@ -29,6 +29,11 @@
     UIImageView *imageView = (UIImageView *)tap.view;
     UIImage *image = imageView.image;
     ReViewPhotoView *review = [[ReViewPhotoView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) Photo:image];
+    
+    CATransition *transition = [CATransition animation];
+    transition.type = kCATransitionReveal;
+    transition.duration = 0.5;
+    [review.layer addAnimation:transition forKey:nil];
     [self.view.window addSubview:review];
 }
 
