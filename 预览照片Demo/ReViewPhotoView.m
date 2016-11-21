@@ -50,6 +50,9 @@
         doubleTapGesture.numberOfTapsRequired = 2;
         [imageView addGestureRecognizer:doubleTapGesture];
         
+        UILongPressGestureRecognizer *longpressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+         [imageView addGestureRecognizer:longpressGesture];
+        
         [oneTapGesture requireGestureRecognizerToFail:doubleTapGesture];
     }
     return self;
@@ -89,7 +92,19 @@
     UIImageView *imageView = (UIImageView *)tap.view;
     [imageView setTransform:transform];
     [imageView setFrame:imgFrame];
+    lastScare = 1.0f;
+    
 }
+
+- (void)longPress:(UILongPressGestureRecognizer *)longPress {
+    UIImageView *imageView = (UIImageView *)longPress.view;
+    if (longPress.state == UIGestureRecognizerStateBegan) {
+        if (self.longpressblock && imageView.image) {
+            self.longpressblock(imageView.image);
+        }
+    }
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

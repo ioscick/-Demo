@@ -34,9 +34,28 @@
     transition.type = kCATransitionReveal;
     transition.duration = 0.5;
     [review.layer addAnimation:transition forKey:nil];
-    [self.view.window addSubview:review];
+    [self.navigationController.view addSubview:review];
+    review.longpressblock =^(UIImage *blockimage) {
+        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"保存图片" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *savephotoAction = [UIAlertAction actionWithTitle:@"保存到本地" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIImageWriteToSavedPhotosAlbum(imageView.image, self, @selector(imageSavedToPhotosAlbum:didFinishSavingWithError:contextInfo:), NULL);
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        [alertVc addAction:savephotoAction];
+        [alertVc addAction:cancelAction];
+        [self.navigationController presentViewController:alertVc animated:YES completion:^{
+            
+        }];
+  
+    };
 }
 
+// 指定回调方法
+- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+    NSLog(@"保存成功");
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

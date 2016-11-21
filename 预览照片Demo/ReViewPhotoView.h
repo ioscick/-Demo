@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^longPressBlock)(UIImage *image);
 @interface ReViewPhotoView : UIView
 
 - (instancetype)initWithFrame:(CGRect)frame Photo:(UIImage *)photo;
 
+@property (copy, nonatomic) longPressBlock longpressblock;
 
 @end
